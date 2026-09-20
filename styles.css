@@ -300,11 +300,13 @@ code{background:var(--primary-ghost);border:1px solid var(--line);border-radius:
 .soc-btn.fav.on .ic{fill:var(--gold)}
 .soc-btn.chat-btn{margin-left:auto}
 .kfoot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:10px 16px;font-size:12.5px;color:var(--muted)}
-.kfoot .actions{display:flex;gap:6px}
+.kfoot .actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .chip-btn{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;font-size:12px;font-weight:800;color:var(--ink-soft);display:inline-flex;align-items:center;gap:6px}
 .chip-btn .ic{width:14px;height:14px}
 .chip-btn:hover{border-color:var(--primary);color:var(--primary-deep)}
 .chip-btn.danger:hover{border-color:var(--bad);color:var(--bad)}
+.chip-btn.ok{color:var(--ok);border-color:#bfe3cd;background:#f4fbf6}
+.chip-btn.ok:hover{border-color:var(--ok);color:var(--ok)}
 .note-pre{background:#f6f9fd;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.8px;color:var(--ink-soft);
   white-space:pre-wrap;max-height:96px;overflow:hidden;font-family:ui-monospace,Menlo,Consolas,monospace}
 .text-pre{font-size:13.3px;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-style:italic}
