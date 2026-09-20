@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MultiMedia Eskul Creation — Galeri & Sosial Kreasi</title>
+<meta name="description" content="Web database kreativitas + sosial Eskul Multimedia: upload, kurasi, like, favorit, dan chat karya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="assets/layla-chibi-peek.png" type="image/png">
+</head>
+<body>
+
+<!-- ===== SVG SPRITE: custom detailed icons (no emoji) ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24">
+      <path d="M3.5 10.2 12 3.6l8.5 6.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.8 9.4V20a1 1 0 0 0 1 1H10v-5.2c0-.8.7-1.5 1.5-1.5h1c.8 0 1.5.7 1.5 1.5V21h3.2a1 1 0 0 0 1-1V9.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="12" cy="11.2" r="1.1" fill="currentColor" opacity=".35"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24">
+      <rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="currentColor" opacity=".3"/>
+      <rect x="3.5" y="13.5" width="7" height="7" rx="2" fill="currentColor" opacity=".3"/>
+      <rect x="13.5" y="13.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="7" cy="7" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-mega" viewBox="0 0 24 24">
+      <path d="M3.5 10.5v3.2a1.4 1.4 0 0 0 1.4 1.4h2.4l3.1 3.4c.5.6 1.5.2 1.5-.6v-11c0-.8-1-1.2-1.5-.6L7.3 9.1H4.9a1.4 1.4 0 0 0-1.4 1.4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M13.9 7.5c1.5 0 3.4 1.6 3.4 4.5s-1.9 4.5-3.4 4.5M16.6 5.4c2.6.7 4.9 2.9 4.9 6.6s-2.3 5.9-4.9 6.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <circle cx="7" cy="12" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24">
+      <path d="M12 16.5v-11M7.2 8.6 12 3.8l4.8 4.8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M4 15.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+      <path d="M7 18.2h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".4"/>
+    </symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24">
+      <path d="M3.5 13.2 5.6 5a1.5 1.5 0 0 1 1.5-1.1h9.8A1.5 1.5 0 0 1 18.4 5l2.1 8.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M3.5 13.2h4.9l1 2.1a1.2 1.2 0 0 0 1.1.7h3a1.2 1.2 0 0 0 1.1-.7l1-2.1h4.9a1 1 0 0 1 1 1.2l-.9 4.6a2 2 0 0 1-2 1.6H6.4a2 2 0 0 1-2-1.6l-.9-4.6a1 1 0 0 1 1-1.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="12" cy="12.4" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M18.5 5.5l-1.8 1.8M7.3 16.7l-1.8 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="12" cy="12" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-out" viewBox="0 0 24 24">
+      <path d="M14 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M10.5 12h10M18.5 8.5 21.5 12l-3 3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.9"/>
+      <path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+      <circle cx="11" cy="11" r="2.4" fill="currentColor" opacity=".25"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="m4.5 12.5 5 5 10-11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-chev-l" viewBox="0 0 24 24">
+      <path d="M14.5 5 7.5 12l7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-chev-r" viewBox="0 0 24 24">
+      <path d="m9.5 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24">
+      <path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="12.8" cy="11.2" r=".9" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-img" viewBox="0 0 24 24">
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="9" cy="10" r="1.8" fill="currentColor" opacity=".45"/>
+      <path d="m5 17.5 4.5-4.5 3 3 2.5-2.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M10.3 9.3v5.4L14.8 12l-4.5-2.7Z" fill="currentColor"/>
+      <circle cx="18.2" cy="8" r="1.4" fill="currentColor" opacity=".4"/>
+    </symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24">
+      <path d="M6 3.5h7l4.5 4.5V20a1 1 0 0 1-1 1h-10a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M13 3.5V8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8.8 12.5h6.4M8.8 15.5h6.4M8.8 18h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-text" viewBox="0 0 24 24">
+      <path d="M4 6.5h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+      <path d="M6.5 6.5V19a1 1 0 0 0 1 1H9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M10 10.5h9M10 14h9M10 17.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24">
+      <path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M9 8.8c.3-.7 1.2-.8 1.5-.1l.6 1.2c.2.4 0 .9-.3 1.1.7 1.2 1.5 2 2.7 2.7-.2-.3.7-.5 1.1-.3l1.2.6c.7.3.6 1.2-.1 1.5-2.9 1.2-7.9-3.8-6.7-6.7Z" fill="currentColor" opacity=".8"/>
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M4.5 20a7.5 7.5 0 0 1 15 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="12" cy="8" r="1.2" fill="currentColor" opacity=".4"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M12 7.5V12l3.2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M4.5 6.5h15M9.5 6V4.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V6M6.5 6.5l1 13a1.5 1.5 0 0 0 1.5 1.4h6a1.5 1.5 0 0 0 1.5-1.4l1-13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 10.5v6M14 10.5v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-send" viewBox="0 0 24 24">
+      <path d="M21 3.5 10.5 14M21 3.5 14 21l-3.5-7L3 10.5 21 3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24">
+      <path d="M3.5 12V5a1.5 1.5 0 0 1 1.5-1.5h7L20.5 12a1.4 1.4 0 0 1 0 2L14 20.5a1.4 1.4 0 0 1-2 0L3.5 12Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24">
+      <path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.5 9.7l5.9-.8L12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="m12 8 1.3 2.7 3 .4-2.2 2 .6 3-2.7-1.5-2.7 1.5.6-3-2.2-2 3-.4L12 8Z" fill="currentColor" opacity=".45"/>
+    </symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24">
+      <path d="M14 4.5h5.5V10" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M19.5 4.5 11 13" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+      <path d="M19 13.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 3 19V6a1.5 1.5 0 0 1 1.5-1.5h5.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <path d="M12 3 5 5.8v5.4c0 4.4 2.9 7.6 7 9.3 4.1-1.7 7-4.9 7-9.3V5.8L12 3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="m9 11.8 2.2 2.2 4-4.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24">
+      <path d="M12 20.5S3.5 15.4 3.5 9.6A4.6 4.6 0 0 1 8.1 5c1.6 0 3 .9 3.9 2.2A4.6 4.6 0 0 1 15.9 5a4.6 4.6 0 0 1 4.6 4.6c0 5.8-8.5 10.9-8.5 10.9Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="9" cy="9.5" r="1.1" fill="currentColor" opacity=".4"/>
+    </symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24">
+      <path d="M6.5 3.5h11a1 1 0 0 1 1 1V21l-6.5-4-6.5 4V4.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M9 8h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+    </symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24">
+      <path d="M4 5.5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-5 4v-14a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="9" cy="11" r="1" fill="currentColor"/><circle cx="12.5" cy="11" r="1" fill="currentColor"/><circle cx="16" cy="11" r="1" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24">
+      <circle cx="9" cy="8.5" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3 19.5a6 6 0 0 1 12 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="17" cy="9.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      <path d="M16.5 14.6a5.2 5.2 0 0 1 4.5 4.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-userplus" viewBox="0 0 24 24">
+      <circle cx="10" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3.5 19.5a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M18.5 8v6M15.5 11h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-key" viewBox="0 0 24 24">
+      <circle cx="8" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="8" cy="12" r="1.4" fill="currentColor" opacity=".45"/>
+      <path d="M12 12h9M18.5 12v3.5M15.5 12v2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24">
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <rect x="7" y="12.5" width="3.4" height="3.4" rx="1" fill="currentColor" opacity=".4"/>
+      <rect x="11.6" y="12.5" width="3.4" height="3.4" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    </symbol>
+    <symbol id="i-info" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="12" cy="8" r="1.2" fill="currentColor"/>
+      <path d="M12 11v5.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24">
+      <path d="M7 4.5h10v4.2a5 5 0 0 1-10 0V4.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M7 5.5H4.2A1.2 1.2 0 0 0 3 6.7c0 2.6 2 4.3 4.4 4.3M17 5.5h2.8a1.2 1.2 0 0 1 1.2 1.2c0 2.6-2 4.3-4.4 4.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M12 13.5v3M8.5 20h7M10 16.5h4l.7 3.5H9.3l.7-3.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="m12 6.5 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3 1-2Z" fill="currentColor" opacity=".5"/>
+    </symbol>
+    <symbol id="i-film" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M7.5 5v14M16.5 5v14M3 9.5h4.5M3 14.5h4.5M16.5 9.5H21M16.5 14.5H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M10.6 10.2v3.6L13.8 12l-3.2-1.8Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-reels" viewBox="0 0 24 24">
+      <rect x="3" y="4.5" width="18" height="15" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M10 9.2v5.6L14.8 12 10 9.2Z" fill="currentColor"/>
+      <path d="M7 4.5v15M17 4.5v15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".55"/>
+    </symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24">
+      <path d="M12 21.5c-4 0-6.8-2.6-6.8-6.3 0-2.5 1.4-4.4 2.7-6C9.2 7.6 10.8 6 10.8 3.5c2.6 1.6 4 3.9 4.5 6.4.4-.4.7-1 1-1.7 1.5 1.6 2.5 3.8 2.5 6 0 4.4-2.2 7.3-6.8 7.3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M12 21.5c-2 0-3.4-1.3-3.4-3.1 0-1.3.7-2.2 1.4-3 .6-.8 1.4-1.6 1.4-2.9 1.3.8 2 2 2.3 3.2.2-.2.4-.5.5-.9.8.8 1.2 1.9 1.2 3 0 2.2-1.1 3.7-3.4 3.7Z" fill="currentColor" opacity=".45"/>
+    </symbol>
+    <symbol id="i-r-wow" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="9" cy="10.5" r="1.7" fill="currentColor"/>
+      <circle cx="15" cy="10.5" r="1.7" fill="currentColor"/>
+      <ellipse cx="12" cy="15.8" rx="1.9" ry="2.3" fill="none" stroke="currentColor" stroke-width="1.7"/>
+    </symbol>
+    <symbol id="i-r-sedih" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <circle cx="9" cy="10.5" r="1.2" fill="currentColor"/>
+      <circle cx="15" cy="10.5" r="1.2" fill="currentColor"/>
+      <path d="M8.5 15.5c1-1.4 2.2-2 3.5-2s2.5.6 3.5 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M17.5 12.5c.7 1.2.7 2.3 0 3.2-.7-.9-.7-2 0-3.2Z" fill="currentColor" opacity=".6"/>
+    </symbol>
+    <symbol id="i-r-marah" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M6.5 8.5 10 10M17.5 8.5 14 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="9.3" cy="12.5" r="1.1" fill="currentColor"/>
+      <circle cx="14.7" cy="12.5" r="1.1" fill="currentColor"/>
+      <path d="M8.5 16.5h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ===== WELCOME OVERLAY ===== -->
+<div id="welcome" aria-hidden="true">
+  <div class="welcome-inner">
+    <div class="welcome-badge"><svg class="ic"><use href="#i-star"/></svg><span>ESKUL MULTIMEDIA</span></div>
+    <h1 class="welcome-title" id="welcomeTitle">Welcome To MultiMedia Eskul Creation!</h1>
+    <div class="welcome-bar"><span></span></div>
+    <img class="welcome-chibi" src="assets/layla-chibi-peek.png" alt="">
+  </div>
+</div>
+
+<div id="app" class="app-hidden">
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <section id="screen-login" class="login-screen">
+    <div class="login-shell">
+      <div class="login-hero">
+        <div class="login-hero-top">
+          <div class="brandmark"><svg class="ic"><use href="#i-star"/></svg></div>
+          <div>
+            <p class="eyebrow">ESKUL MULTIMEDIA</p>
+            <h2>Creation<br>Database</h2>
+          </div>
+        </div>
+        <p class="login-hero-desc">Ruang arsip + sosial karya murid — gambar, video, catatan, dan tulisan. Dikurasi admin, dibuka untuk semua.</p>
+        <div class="login-hero-art">
+          <div class="hero-bubble b1"></div>
+          <div class="hero-bubble b2"></div>
+          <img src="assets/layla-hero.png" alt="Maskot Eskul Multimedia">
+        </div>
+        <ul class="login-points">
+          <li><svg class="ic"><use href="#i-heart"/></svg>Like & favorit karya temanmu</li>
+          <li><svg class="ic"><use href="#i-chat"/></svg>Kolom chat di setiap karya</li>
+          <li><svg class="ic"><use href="#i-trophy"/></svg>Video terpopuler dapat reward guru</li>
+        </ul>
+      </div>
+      <div class="login-card">
+        <div class="login-card-head">
+          <h3>Masuk akun</h3>
+          <p>Murid: gunakan username & password dari pembina. Atau masuk sebagai tamu.</p>
+        </div>
+        <label class="field">
+          <span>Username</span>
+          <span class="input-wrap"><svg class="ic"><use href="#i-user"/></svg><input id="loginUser" type="text" placeholder="Username kamu" autocomplete="username"></span>
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <span class="input-wrap"><svg class="ic"><use href="#i-key"/></svg><input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></span>
+        </label>
+        <p id="loginError" class="form-error" role="alert" hidden></p>
+        <button id="btnLogin" class="btn btn-primary btn-block"><svg class="ic"><use href="#i-check"/></svg>Masuk</button>
+        <div class="or-divider"><span>atau</span></div>
+        <button id="btnGuest" class="btn btn-guest btn-block"><svg class="ic"><use href="#i-eye"/></svg>Masuk sebagai Guest</button>
+        <div class="login-hint">
+          <p><strong>Akun admin</strong> memakai username & password masing-masing.</p>
+          <p class="muted">Lupa password? Minta reset ke pembina. Data tersimpan lokal di perangkat (mode Netlify statis).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAIN SCREEN ===== -->
+  <section id="screen-main" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <button class="brand" id="brandHome" title="Beranda">
+          <span class="brandmark sm"><svg class="ic"><use href="#i-star"/></svg></span>
+          <span class="brand-text"><strong>MultiMedia</strong><em>Eskul Creation</em></span>
+        </button>
+        <div class="top-search">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input id="globalSearch" type="search" placeholder="Cari karya, owner, kategori…" autocomplete="off">
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="btnInboxTop" title="Inbox"><svg class="ic"><use href="#i-inbox"/></svg><span class="badge" id="inboxBadge" hidden>0</span></button>
+          <div class="profile-chip" id="profileChip" title="Akun">
+            <img id="profileAvatar" src="assets/layla-chibi-peek.png" alt="">
+            <span><strong id="profileName">—</strong><em id="profileRole">—</em></span>
+          </div>
+          <button class="icon-btn" id="btnLogout" title="Keluar"><svg class="ic"><use href="#i-out"/></svg></button>
+        </div>
+      </div>
+      <nav class="tabs" id="mainTabs" aria-label="Navigasi utama">
+        <button data-tab="beranda" class="active"><svg class="ic"><use href="#i-home"/></svg><span>Beranda</span></button>
+        <button data-tab="galeri"><svg class="ic"><use href="#i-grid"/></svg><span>Galeri</span></button>
+        <button data-tab="reels"><svg class="ic"><use href="#i-reels"/></svg><span>Reels</span></button>
+        <button data-tab="favorit"><svg class="ic"><use href="#i-bookmark"/></svg><span>Favorit</span></button>
+        <button data-tab="announce"><svg class="ic"><use href="#i-mega"/></svg><span>Announce</span><span class="tab-dot" id="announceDot" hidden></span></button>
+        <button data-tab="upload" id="tabBtnUpload"><svg class="ic"><use href="#i-upload"/></svg><span>Upload</span></button>
+        <button data-tab="review" id="tabBtnReview" hidden><svg class="ic"><use href="#i-eye"/></svg><span>Review</span><span class="badge" id="reviewBadge" hidden>0</span></button>
+        <button data-tab="murid" id="tabBtnMurid" hidden><svg class="ic"><use href="#i-users"/></svg><span>Murid</span></button>
+        <button data-tab="inbox"><svg class="ic"><use href="#i-inbox"/></svg><span>Inbox</span><span class="badge" id="inboxBadgeTab" hidden>0</span></button>
+        <button data-tab="chat"><svg class="ic"><use href="#i-chat"/></svg><span>Chat</span><span class="badge" id="chatBadge" hidden>0</span></button>
+        <button data-tab="akun"><svg class="ic"><use href="#i-gear"/></svg><span>Akun</span></button>
+      </nav>
+    </header>
+
+    <main class="page">
+      <!-- BERANDA -->
+      <section class="tabpane active" id="pane-beranda">
+        <div class="hero">
+          <button class="hero-arrow left" id="heroPrev" aria-label="Sebelumnya"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+          <div class="hero-track" id="heroTrack">
+            <article class="hero-slide s1">
+              <div class="hero-copy">
+                <p class="eyebrow light">GENSHIN CORNER • ESKUL PICK</p>
+                <h2>Layla</h2>
+                <p class="hero-sub">Ruang arsip + sosial karya Multimedia — dari sketsa art sampai podcast. Like, favorit, dan ngobrol di kolom chat.</p>
+                <button class="linklike" data-goto="galeri">Read More</button>
+              </div>
+              <img class="hero-img" src="assets/layla-hero.png" alt="Layla — maskot galeri">
+            </article>
+            <article class="hero-slide s2">
+              <div class="hero-copy">
+                <p class="eyebrow light">BUAT • UPLOAD • DIKURASI</p>
+                <h2>Upload karyamu hari ini</h2>
+                <p class="hero-sub">Gambar, video file (maks 30MB), link YouTube, catatan .txt/.md, atau tulisan langsung. Admin mereview maksimal 1×24 jam.</p>
+                <button class="linklike" data-goto="upload">Upload Sekarang</button>
+              </div>
+              <img class="hero-img" src="assets/layla-sit.png" alt="Layla duduk">
+            </article>
+            <article class="hero-slide s3">
+              <div class="hero-copy">
+                <p class="eyebrow light">OPEN RECRUITMENT</p>
+                <h2>Join Eskul Multimedia</h2>
+                <p class="hero-sub">Lihat galeri sebagai tamu, lalu hubungi pembina via WhatsApp untuk gabung. Tanpa akun, tanpa ribet.</p>
+                <button class="linklike" id="heroJoin">Join via WhatsApp</button>
+              </div>
+              <img class="hero-img small" src="assets/layla-chibi-dizzy.png" alt="Layla chibi">
+            </article>
+          </div>
+          <button class="hero-arrow right" id="heroNext" aria-label="Berikutnya"><svg class="ic"><use href="#i-chev-r"/></svg></button>
+          <div class="hero-dots" id="heroDots"><span class="on"></span><span></span><span></span></div>
+        </div>
+
+        <div class="stats-strip reveal">
+          <div class="stat"><strong id="statKarya">0</strong><span>Karya tayang</span></div>
+          <div class="stat"><strong id="statKategori">0</strong><span>Kategori</span></div>
+          <div class="stat"><strong id="statPending">0</strong><span>Antre review</span></div>
+          <div class="stat"><strong id="statAnnounce">0</strong><span>Announce</span></div>
+        </div>
+
+        <div class="panel reveal" id="streakPanel" hidden>
+          <div class="panel-head"><h3><svg class="ic" style="vertical-align:-4px"><use href="#i-fire"/></svg> Streak Harian</h3><span class="pill-soft" id="streakName">—</span></div>
+          <div class="streak-stats">
+            <div class="stat"><strong id="stSesi">0</strong><span>Sesi login</span></div>
+            <div class="stat"><strong id="stUpload">0</strong><span>Karya upload</span></div>
+            <div class="stat"><strong id="stDays">0</strong><span>Hari aktif</span></div>
+            <div class="stat"><strong id="stCur">0</strong><span>Streak sekarang</span></div>
+            <div class="stat"><strong id="stLong">0</strong><span>Streak terpanjang</span></div>
+          </div>
+          <div class="streak-grid" id="streakGrid"></div>
+          <p class="muted small">Login, upload, dan chat tiap hari biar streak-mu nyala terus.</p>
+        </div>
+
+        <div class="panel reveal" id="topVideoPanel" hidden>
+          <div class="panel-head"><h3><svg class="ic" style="vertical-align:-4px"><use href="#i-trophy"/></svg> Top Video</h3><span class="pill-soft">reward dari guru</span></div>
+          <div class="mini-row" id="topVideoRow"></div>
+        </div>
+
+        <div class="panel reveal" id="topKaryaPanel" hidden>
+          <div class="panel-head"><h3><svg class="ic" style="vertical-align:-4px"><use href="#i-fire"/></svg> Terpopuler</h3><button class="mini-link" data-goto="reels">Buka Reels</button></div>
+          <div class="mini-row" id="topKaryaRow"></div>
+        </div>
+
+        <div class="home-grid">
+          <div class="panel reveal">
+            <div class="panel-head"><h3>Karya Terbaru</h3><button class="mini-link" data-goto="galeri">View More</button></div>
+            <div class="mini-row" id="homeLatest"></div>
+          </div>
+          <div class="panel reveal">
+            <div class="panel-head"><h3>Recent Search</h3><button class="mini-link" id="clearHistory">Hapus</button></div>
+            <div class="search-pills" id="recentSearch"></div>
+            <div class="chibi-line"><img src="assets/layla-chibi-dizzy.png" alt=""><img src="assets/layla-chibi-peek.png" alt=""></div>
+          </div>
+          <div class="panel reveal">
+            <div class="panel-head"><h3>Tentang Eskul</h3></div>
+            <div class="info-cards">
+              <div class="info-card"><span class="info-ic"><svg class="ic"><use href="#i-heart"/></svg></span><div><strong>Sosial kreasi</strong><p>Like, simpan favorit, dan chat di setiap karya temanmu.</p></div></div>
+              <div class="info-card"><span class="info-ic"><svg class="ic"><use href="#i-shield"/></svg></span><div><strong>Kurasi admin</strong><p>Upload masuk antre review. Yang lolos langsung tayang di galeri.</p></div></div>
+              <div class="info-card"><span class="info-ic"><svg class="ic"><use href="#i-wa"/></svg></span><div><strong>Join via WhatsApp</strong><p>Tamu bisa intip galeri lalu chat pembina untuk gabung eskul.</p></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel-head"><h3>Kategori</h3></div>
+          <div class="cat-chips" id="homeCats"></div>
+        </div>
+
+        <div class="panel reveal" id="joinPanel">
+          <div class="join-card">
+            <img src="assets/layla-chibi-peek.png" alt="">
+            <div><h3>Mau gabung Eskul Multimedia?</h3><p id="joinDesc">Chat pembina langsung — sebut nama & kelasmu.</p></div>
+            <button class="btn btn-primary" id="btnJoinWa"><svg class="ic"><use href="#i-wa"/></svg><span id="joinWaLabel">Join via WhatsApp</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALERI -->
+      <section class="tabpane" id="pane-galeri">
+        <div class="filter-bar">
+          <div class="seg" id="typeSeg" role="tablist" aria-label="Filter tipe">
+            <button data-type="all" class="on">Semua</button>
+            <button data-type="gambar"><svg class="ic"><use href="#i-img"/></svg>Gambar</button>
+            <button data-type="video"><svg class="ic"><use href="#i-play"/></svg>Video</button>
+            <button data-type="note"><svg class="ic"><use href="#i-doc"/></svg>Note</button>
+            <button data-type="text"><svg class="ic"><use href="#i-text"/></svg>Text</button>
+          </div>
+          <select id="filterCat" aria-label="Filter kategori"></select>
+        </div>
+        <p class="result-meta" id="galeriMeta"></p>
+        <div class="kreasi-grid" id="galeriGrid"></div>
+        <div class="empty" id="galeriEmpty" hidden>
+          <img src="assets/layla-chibi-dizzy.png" alt="">
+          <h4>Belum ada karya di sini</h4>
+          <p>Coba ganti kata kunci / kategori, atau jadi yang pertama upload.</p>
+          <button class="btn btn-primary" data-goto="upload" id="emptyUploadBtn"><svg class="ic"><use href="#i-upload"/></svg>Upload karya</button>
+        </div>
+      </section>
+
+      <!-- REELS -->
+      <section class="tabpane" id="pane-reels">
+        <p class="result-meta">Geser ke atas / bawah untuk karya berikutnya. Ketuk reaksi untuk merespons cepat.</p>
+        <div class="reels-feed" id="reelsFeed"></div>
+        <div class="empty" id="reelsEmpty" hidden>
+          <img src="assets/layla-chibi-dizzy.png" alt="">
+          <h4>Belum ada reels</h4>
+          <p>Karya yang tayang akan muncul di sini.</p>
+        </div>
+      </section>
+
+      <!-- FAVORIT -->
+      <section class="tabpane" id="pane-favorit">
+        <p class="result-meta" id="favMeta"></p>
+        <div class="kreasi-grid" id="favGrid"></div>
+        <div class="empty" id="favEmpty" hidden>
+          <img src="assets/layla-chibi-peek.png" alt="">
+          <h4>Belum ada favorit</h4>
+          <p>Ketuk ikon bookmark di karya mana pun untuk menyimpannya di sini.</p>
+          <button class="btn btn-primary" data-goto="galeri"><svg class="ic"><use href="#i-grid"/></svg>Lihat galeri</button>
+        </div>
+      </section>
+
+      <!-- ANNOUNCE -->
+      <section class="tabpane" id="pane-announce">
+        <div id="tugasSpot"></div>
+        <div class="panel admin-only" id="announceFormPanel" hidden>
+          <div class="panel-head"><h3>Posting announce baru</h3></div>
+          <label class="field"><span>Judul announce</span><input id="annTitle" type="text" placeholder="cth: Tugas minggu ini — animasi 10 detik"></label>
+          <label class="field"><span>Isi announce</span><textarea id="annBody" rows="3" placeholder="Tulis info kegiatan, tugas, deadline, atau pengumuman…"></textarea></label>
+          <button class="btn btn-primary" id="btnPostAnn"><svg class="ic"><use href="#i-send"/></svg>Posting announce</button>
+        </div>
+        <div class="ann-list" id="annList"></div>
+      </section>
+
+      <!-- UPLOAD -->
+      <section class="tabpane" id="pane-upload">
+        <div class="panel">
+          <div class="panel-head"><h3>Upload kreasi</h3><span class="pill-soft" id="uploadAs">—</span></div>
+          <div class="form-grid">
+            <label class="field"><span>Judul kreasi <b>*</b></span><input id="upTitle" type="text" maxlength="80" placeholder="cth: Sketsa Layla — Cryo Study"></label>
+            <label class="field"><span>Owner / copyright <b>*</b> <em class="req">(wajib)</em></span><input id="upOwner" type="text" maxlength="60" placeholder="cth: Maurisa Savanna Danish"></label>
+          </div>
+          <label class="field"><span>Deskripsi kreasi <b>*</b> <em class="req">(wajib)</em></span><textarea id="upDesc" rows="3" maxlength="1000" placeholder="Ceritakan karyamu: alat, proses, durasi…"></textarea></label>
+          <div class="form-grid">
+            <label class="field"><span>Kelas <b>*</b></span><select id="upKelas"><option value="">— pilih —</option><option>7</option><option>8</option><option>9</option></select></label>
+            <label class="field"><span>Ruangan <b>*</b></span><select id="upRoom"><option value="">— pilih —</option><option>A</option><option>B</option><option>C</option><option>D</option></select></label>
+          </div>
+          <div class="form-grid">
+            <label class="field"><span>Kategori <b>*</b></span><select id="upCat"></select></label>
+            <div class="field"><span>Tipe kreasi <b>*</b></span>
+              <div class="seg wrap" id="upTypeSeg">
+                <button data-type="gambar" class="on"><svg class="ic"><use href="#i-img"/></svg>Gambar</button>
+                <button data-type="videoyt"><svg class="ic"><use href="#i-play"/></svg>Video YT</button>
+                <button data-type="vidfile"><svg class="ic"><use href="#i-film"/></svg>Video File</button>
+                <button data-type="note"><svg class="ic"><use href="#i-doc"/></svg>Note</button>
+                <button data-type="text"><svg class="ic"><use href="#i-text"/></svg>Text</button>
+              </div>
+            </div>
+          </div>
+          <div id="upTypeBody">
+            <div class="up-type" id="upType-gambar">
+              <label class="dropzone" id="imgDrop">
+                <svg class="ic big"><use href="#i-img"/></svg>
+                <strong>Klik / drop gambar di sini</strong>
+                <span>Bisa lebih dari 1 file, tanpa batas jumlah • JPG/PNG/WebP/GIF</span>
+                <input id="upImages" type="file" accept="image/*" multiple hidden>
+              </label>
+              <div class="thumb-row" id="imgPreview"></div>
+            </div>
+            <div class="up-type" id="upType-videoyt" hidden>
+              <label class="field"><span>Link YouTube <b>*</b></span>
+                <span class="input-wrap"><svg class="ic"><use href="#i-play"/></svg><input id="upVideoUrl" type="url" placeholder="https://www.youtube.com/watch?v=…  / youtu.be / shorts"></span>
+              </label>
+              <div class="yt-preview" id="ytPreview" hidden>
+                <img id="ytThumb" alt="Thumbnail YouTube"><div><strong id="ytIdLabel"></strong><p class="muted">Thumbnail diambil otomatis. Klik kartu di galeri untuk buka YouTube.</p></div>
+              </div>
+            </div>
+            <div class="up-type" id="upType-vidfile" hidden>
+              <label class="dropzone" id="vidDrop">
+                <svg class="ic big"><use href="#i-film"/></svg>
+                <strong>Klik / drop video di sini (maks 30MB)</strong>
+                <span>Video lite: animasi singkat, perkenalan, dsb • MP4/WebM/MOV</span>
+                <input id="upVideoFile" type="file" accept="video/*" hidden>
+              </label>
+              <div class="vid-preview" id="vidPreview" hidden>
+                <video id="vidPrevEl" controls playsinline preload="metadata"></video>
+                <div><strong id="vidNameLabel"></strong><p class="muted" id="vidSizeLabel"></p>
+                <button class="chip-btn danger" id="btnVidRemove" type="button"><svg class="ic"><use href="#i-trash"/></svg>Hapus video</button></div>
+              </div>
+            </div>
+            <div class="up-type" id="upType-note" hidden>
+              <label class="dropzone" id="noteDrop">
+                <svg class="ic big"><use href="#i-doc"/></svg>
+                <strong>Upload file .txt / .md</strong>
+                <span>Isi file ditampilkan sebagai teks biasa di galeri</span>
+                <input id="upNoteFile" type="file" accept=".txt,.md,.markdown,.text,text/plain,text/markdown" hidden>
+              </label>
+              <label class="field"><span>Isi note <em>(bisa edit setelah file dibaca)</em></span><textarea id="upNoteText" rows="6" maxlength="20000" placeholder="…atau ketik / paste langsung di sini"></textarea></label>
+            </div>
+            <div class="up-type" id="upType-text" hidden>
+              <label class="field"><span>Tulis karyamu <b>*</b></span><textarea id="upTextBody" rows="8" maxlength="20000" placeholder="Cerpen, puisi, opini, tutorial — tulis langsung di sini…"></textarea></label>
+            </div>
+          </div>
+          <p id="uploadError" class="form-error" role="alert" hidden></p>
+          <div class="form-actions">
+            <button class="btn btn-ghost" id="btnUpReset">Reset</button>
+            <button class="btn btn-primary" id="btnUpSubmit"><svg class="ic"><use href="#i-send"/></svg>Kirim untuk direview</button>
+          </div>
+          <p class="muted small">Karya masuk antre review admin. Kamu dapat notif inbox saat di-accept / decline (+alasan jelas).</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Upload-ku</h3></div>
+          <div class="kreasi-grid" id="myGrid"></div>
+        </div>
+      </section>
+
+      <!-- REVIEW (admin) -->
+      <section class="tabpane" id="pane-review">
+        <div class="panel">
+          <div class="panel-head"><h3>Antre review <span class="pill-soft" id="reviewCount">0 pending</span></h3></div>
+          <div class="kreasi-grid" id="reviewGrid"></div>
+          <div class="empty" id="reviewEmpty" hidden>
+            <img src="assets/layla-chibi-peek.png" alt="">
+            <h4>Antrean kosong</h4><p>Semua karya sudah direview. Santai dulu.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MURID (admin) -->
+      <section class="tabpane" id="pane-murid">
+        <div class="panel">
+          <div class="panel-head"><h3>Tahun pelajaran <span class="pill-soft" id="yearLabel">—</span></h3></div>
+          <div class="form-grid">
+            <label class="field"><span>Ganti ke tahun ajaran baru</span><input id="newYear" type="text" maxlength="9" placeholder="cth: 2027/2028"></label>
+            <div class="field"><span>&nbsp;</span><button class="btn btn-primary" id="btnPromote"><svg class="ic"><use href="#i-users"/></svg>Naikkan kelas semua murid</button></div>
+          </div>
+          <p class="muted small">Kelas 7→8, 8→9 (ruangan ikut, misal 7B→8B). Kelas 9 menjadi Alumni. Username ikut update mengikuti kelas baru; karya lama tetap tersimpan.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Tambah akun murid</h3></div>
+          <div class="form-grid">
+            <label class="field"><span>Nama lengkap <b>*</b></span><input id="nuName" type="text" maxlength="60" placeholder="cth: Salsa Putri"></label>
+            <label class="field"><span>Kelas <b>*</b></span><select id="nuKelas"><option value="">— pilih —</option><option>7A</option><option>7B</option><option>7C</option><option>7D</option><option>8A</option><option>8B</option><option>8C</option><option>9A</option><option>9B</option><option>9C</option></select></label>
+          </div>
+          <button class="btn btn-primary" id="btnAddMurid"><svg class="ic"><use href="#i-userplus"/></svg>Buat akun</button>
+          <p class="muted small" id="addMuridInfo">Username otomatis: nama depan + kelas (cth: salsa8b). Password awal: nama depan.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Daftar murid <span class="pill-soft" id="muridCount">0</span></h3>
+            <span class="input-wrap" style="max-width:230px"><svg class="ic"><use href="#i-search"/></svg><input id="muridSearch" type="search" placeholder="Cari nama / kelas…"></span></div>
+          <div class="table-wrap"><table class="murid-table" id="muridTable">
+            <thead><tr><th>Nama</th><th>Kelas</th><th>Username</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="muridBody"></tbody>
+          </table></div>
+        </div>
+      </section>
+
+      <!-- CHAT KOMUNITAS -->
+      <section class="tabpane" id="pane-chat">
+        <div class="chat-shell">
+          <div class="chat-list" id="chatListPane">
+            <div class="panel-head" style="padding:16px 16px 0"><h3>Percakapan</h3><button class="chip-btn" id="btnNewDm"><svg class="ic"><use href="#i-plus"/></svg>Chat baru</button></div>
+            <div class="chat-new" id="chatNewForm" hidden>
+              <label class="field"><span>Chat dengan</span><select id="dmUser"></select></label>
+              <button class="btn btn-primary btn-block" id="btnStartDm"><svg class="ic"><use href="#i-send"/></svg>Mulai chat</button>
+            </div>
+            <div class="thread-list" id="threadList"></div>
+          </div>
+          <div class="chat-room" id="chatRoomPane">
+            <div class="chat-empty" id="chatEmpty">
+              <img src="assets/layla-chibi-peek.png" alt="">
+              <h4>Pilih percakapan</h4><p>Grup publik terbuka untuk semua — admin, murid, guest.</p>
+            </div>
+            <div id="chatRoom" hidden>
+              <div class="chat-room-head">
+                <button class="icon-btn chat-back" id="chatBack" aria-label="Kembali"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+                <div><strong id="chatRoomName">—</strong><p class="muted small" id="chatRoomSub">—</p></div>
+              </div>
+              <div class="chat-msgs" id="chatMsgs"></div>
+              <div class="comment-form chat-input">
+                <input id="chatMsgInput" type="text" maxlength="1000" placeholder="Tulis pesan…">
+                <button class="btn btn-primary" id="chatMsgSend"><svg class="ic"><use href="#i-send"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INBOX -->
+      <section class="tabpane" id="pane-inbox">
+        <div class="panel">
+          <div class="panel-head"><h3>Inbox</h3><button class="mini-link" id="btnReadAll">Tandai semua dibaca</button></div>
+          <div class="inbox-list" id="inboxList"></div>
+          <div class="empty" id="inboxEmpty" hidden>
+            <img src="assets/layla-chibi-dizzy.png" alt="">
+            <h4>Inbox kosong</h4><p>Notifikasi review & announce penting muncul di sini.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- AKUN -->
+      <section class="tabpane" id="pane-akun">
+        <div class="mascot-note" id="secureNote">
+          <img src="assets/mascot-secure.png" alt="" onerror="this.onerror=null;this.src='assets/layla-chibi-peek.png'">
+          <div class="bubble"><strong>Cepat ganti password kamu untuk menjaga keamanan akun</strong><p>Ganti password bawaanmu dengan yang hanya kamu tahu. Jangan bagikan ke siapa pun.</p></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Profilku</h3><span class="pill-soft" id="akunRole">—</span></div>
+          <label class="field"><span>Nama panggilan <em>(tampil di greeting & chat)</em></span><input id="setNick" type="text" maxlength="40" placeholder="cth: Maurisa"></label>
+          <button class="btn btn-primary" id="btnSaveNick"><svg class="ic"><use href="#i-check"/></svg>Simpan panggilan</button>
+        </div>
+        <div class="panel" id="pwPanel">
+          <div class="panel-head"><h3>Ganti password</h3></div>
+          <label class="field"><span>Password lama <b>*</b></span><input id="pwOld" type="password" autocomplete="current-password"></label>
+          <label class="field"><span>Password baru <b>*</b> <em>(min 4 karakter)</em></span><input id="pwNew" type="password" autocomplete="new-password"></label>
+          <button class="btn btn-primary" id="btnChangePw"><svg class="ic"><use href="#i-key"/></svg>Ganti password</button>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Preferensi</h3></div>
+          <div class="setting-rows">
+            <div class="setting-row"><div><strong>Panduan mascot</strong><p class="muted">Bubble pemandu di setiap halaman.</p></div><button class="btn btn-ghost" id="btnGuideToggle">Matikan</button></div>
+            <div class="setting-row"><div><strong>Sesi aktif</strong><p class="muted" id="settingSession">—</p></div></div>
+          </div>
+        </div>
+        <div class="panel admin-only" id="adminWaPanel" hidden>
+          <div class="panel-head"><h3>Kontak join eskul</h3></div>
+          <label class="field"><span>Nomor WhatsApp pembina <b>*</b></span>
+            <span class="input-wrap"><svg class="ic"><use href="#i-wa"/></svg><input id="setWa" type="tel" placeholder="62812xxxxxxx"></span>
+          </label>
+          <label class="field"><span>Pesan default tombol join</span><input id="setWaMsg" type="text" maxlength="160" placeholder="Halo kak, saya mau join Eskul Multimedia!"></label>
+          <button class="btn btn-primary" id="btnSaveWa"><svg class="ic"><use href="#i-check"/></svg>Simpan kontak</button>
+        </div>
+        <div class="panel admin-only" id="adminDbPanel" hidden>
+          <div class="panel-head"><h3>Data</h3></div>
+          <div class="setting-rows">
+            <div class="setting-row"><div><strong>Reset data demo</strong><p class="muted">Kembalikan database lokal ke bawaan (hapus semua upload & inbox).</p></div><button class="btn btn-danger" id="btnResetDb"><svg class="ic"><use href="#i-trash"/></svg>Reset</button></div>
+            <div class="setting-row"><div><strong>Export database (JSON)</strong><p class="muted">Backup metadata (akun, karya, inbox). File video tidak ikut.</p></div><button class="btn btn-ghost" id="btnExportDb">Export</button></div>
+            <div class="setting-row"><div><strong>Import database (JSON)</strong><p class="muted">Pulihkan dari file backup.</p></div><span><button class="btn btn-ghost" id="btnImportDb">Import</button><input id="importFile" type="file" accept="application/json,.json" hidden></span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottombar" aria-label="Navigasi bawah">
+      <button data-tab="beranda" class="active"><svg class="ic"><use href="#i-home"/></svg><span>Home</span></button>
+      <button data-tab="galeri"><svg class="ic"><use href="#i-grid"/></svg><span>Galeri</span></button>
+      <button data-tab="upload" id="bottomUpload"><svg class="ic"><use href="#i-plus"/></svg><span>Upload</span></button>
+      <button data-tab="favorit"><svg class="ic"><use href="#i-bookmark"/></svg><span>Favorit</span></button>
+      <button data-tab="inbox"><svg class="ic"><use href="#i-inbox"/></svg><span>Inbox</span><span class="badge" id="inboxBadgeBottom" hidden>0</span></button>
+      <button data-tab="chat"><svg class="ic"><use href="#i-chat"/></svg><span>Chat</span><span class="badge" id="chatBadgeBottom" hidden>0</span></button>
+    </nav>
+  </section>
+</div>
+
+<!-- ===== GUIDE BUBBLE ===== -->
+<div id="guideBubble" hidden>
+  <img id="guideImg" src="assets/mascot-guide.png" alt="" onerror="this.onerror=null;this.src='assets/layla-chibi-peek.png'">
+  <div class="bubble"><p id="guideText"></p>
+    <div class="guide-actions"><button id="guideClose">Mengerti</button><button id="guideOff">Matikan</button></div>
+  </div>
+</div>
+
+<!-- ===== GUEST NICKNAME MODAL ===== -->
+<div class="modal" id="guestModal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-card greet-card" role="dialog" aria-modal="true">
+    <img src="assets/layla-chibi-peek.png" alt="">
+    <h3>Mau dipanggil siapa?</h3>
+    <p id="guestSub" style="color:var(--ink-soft);font-size:15px;margin-top:2px">Guest wajib punya nama panggilan buat chat & komentar.</p>
+    <label class="field" style="text-align:left;margin-top:14px"><span>Nama panggilan <b>*</b></span><input id="guestNick" type="text" maxlength="20" placeholder="cth: Bintang7B"></label>
+    <button class="btn btn-primary btn-block" id="guestGo"><svg class="ic"><use href="#i-check"/></svg>Masuk sebagai Guest</button>
+  </div>
+</div>
+
+<!-- ===== GREETING SPLASH ===== -->
+<div class="modal" id="greetModal" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-card greet-card" role="dialog" aria-modal="true">
+    <img id="greetImg" src="assets/mascot-halo.png" alt="" onerror="this.onerror=null;this.src='assets/layla-chibi-peek.png'">
+    <h3 id="greetTitle">Wah halo lagi!</h3>
+    <p id="greetSub">mau upload apa hari ini?</p>
+    <p class="greet-date"><svg class="ic"><use href="#i-cal"/></svg><span id="greetDate"></span></p>
+    <button class="btn btn-primary btn-block" id="greetGo"><svg class="ic"><use href="#i-check"/></svg>Gaskeun!</button>
+  </div>
+</div>
+
+<!-- ===== DETAIL MODAL ===== -->
+<div class="modal" id="kreasiModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="icon-btn modal-x" data-close aria-label="Tutup"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div id="kreasiDetail"></div>
+  </div>
+</div>
+
+<!-- ===== REVIEW MODAL (admin) ===== -->
+<div class="modal" id="reviewModal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="icon-btn modal-x" data-close aria-label="Tutup"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div id="reviewDetail"></div>
+    <label class="field"><span>Alasan decline <em>(wajib jika decline)</em></span><textarea id="declineReason" rows="3" placeholder="cth: Gambar blur + deskripsi kurang lengkap. Tambahkan proses pembuatan ya."></textarea></label>
+    <div class="form-actions sticky-actions">
+      <button class="btn btn-ghost" id="btnDelReview"><svg class="ic"><use href="#i-trash"/></svg>Hapus</button>
+      <button class="btn btn-danger" id="btnDecline"><svg class="ic"><use href="#i-x"/></svg>Decline</button>
+      <button class="btn btn-primary" id="btnAccept"><svg class="ic"><use href="#i-check"/></svg>Accept & tayangkan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LIGHTBOX ===== -->
+<div class="modal" id="lightbox" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="lightbox-card">
+    <button class="icon-btn modal-x" data-close aria-label="Tutup"><svg class="ic"><use href="#i-x"/></svg></button>
+    <button class="hero-arrow left" id="lbPrev" aria-label="Sebelumnya"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+    <img id="lbImg" alt="Pratinjau gambar">
+    <button class="hero-arrow right" id="lbNext" aria-label="Berikutnya"><svg class="ic"><use href="#i-chev-r"/></svg></button>
+    <p id="lbCount" class="muted"></p>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
