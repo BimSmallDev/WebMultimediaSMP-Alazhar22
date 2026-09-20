@@ -474,7 +474,11 @@ function kcardHtml(k, opts={}){
     <div class="kfoot">
       <span>${fmtDate(k.date)}</span>
       <span class="actions">
-        ${reviewMode?`<button class="chip-btn" data-review="${k.id}"><svg class="ic"><use href="#i-eye"/></svg>Review</button>`:`<span class="chip-btn"><svg class="ic"><use href="#i-eye"/></svg>Lihat</span>`}
+        ${reviewMode
+          ?`<button class="chip-btn ok" data-approve="${k.id}"><svg class="ic"><use href="#i-check"/></svg>Approve</button>
+            <button class="chip-btn" data-review="${k.id}"><svg class="ic"><use href="#i-eye"/></svg>Review</button>
+            <button class="chip-btn danger" data-decline="${k.id}"><svg class="ic"><use href="#i-x"/></svg>Decline</button>`
+          :`<span class="chip-btn"><svg class="ic"><use href="#i-eye"/></svg>Lihat</span>`}
       </span>
     </div>
   </article>`;
@@ -706,6 +710,10 @@ let lbImgs = [], lbIdx = 0;
 function bindModals(){
   document.addEventListener("click", e=>{
     if(e.target.closest("[data-react-open],[data-setreact],[data-fav],.react-pop,.react-picker")) return; // handled by social listener
+    const appr = e.target.closest("[data-approve]");
+    if(appr){ e.stopPropagation(); quickApprove(appr.dataset.approve); return; }
+    const decl = e.target.closest("[data-decline]");
+    if(decl){ e.stopPropagation(); openReview(decl.dataset.decline); setTimeout(()=>$("#declineReason")?.focus(), 350); return; }
     const rev = e.target.closest("[data-review]");
     if(rev){ e.stopPropagation(); openReview(rev.dataset.review); return; }
     const del = e.target.closest("[data-delkreasi]");
@@ -1068,6 +1076,20 @@ function openReview(id){
     im.classList.add("on"); if(main) main.src = im.dataset.full;
   }));
   if(main) main.addEventListener("click", ()=>{ lbImgs = k.images||[]; lbShow(0); });
+}
+function quickApprove(id){
+  const m = me();
+  if(!m || m.role!=="admin"){ toast("Hanya admin.", "bad"); return; }
+  const k = DB.kreas.find(x=>x.id===id);
+  if(!k || k.status!=="pending") return;
+  k.status = "approved"; k.declineReason = "";
+  DB.inboxes.unshift({ id:uid("m"), to:k.author, from:m.u, kind:"good",
+    title:`Karyamu tayang: “${k.title}”`,
+    body:`Selamat! ${TYPE_LABEL[k.type]} kategori ${k.category} sudah tayang di galeri.\n\n— ${displayName(m)}`,
+    date:new Date().toISOString(), read:false, relatedId:k.id });
+  DB.inboxes.forEach(x=>{ if(x.relatedId===k.id && x.to!==k.author) x.read = true; });
+  saveDb(); renderAll(); renderMine();
+  toast(`“${k.title}” tayang di galeri.`, "ok");
 }
 function decideReview(accept){
   const k = DB.kreas.find(x=>x.id===reviewId); if(!k) return;
